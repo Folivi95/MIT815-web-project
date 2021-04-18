@@ -56,20 +56,73 @@ if(isset($_POST['createuserbtn']))
                 // echo "Saved";
                 $_SESSION['createuserstatus'] = "User Created";
                 $_SESSION['createuserstatus_status_code'] = "success";
-                header('Location: register.php');
+                header('Location: createuser.php');
             }
             else 
             {
                 $_SESSION['createuserstatus'] = "Admin Profile Not Added";
                 $_SESSION['createuserstatus_status_code'] = "error";
-                header('Location: register.php');  
+                header('Location: createuser.php');  
             }
         }
         else 
         {
             $_SESSION['createuserstatus'] = "Password and Confirm Password Does Not Match";
             $_SESSION['createuserstatus_status_code'] = "warning";
-            header('Location: register.php');  
+            header('Location: createuser.php');  
+        }
+    }
+
+}
+?>
+
+<?php
+include('security.php');
+
+if(isset($_POST['createclassbtn']))
+{
+    $name = $_POST['classname'];
+    $venue = $_POST['venue'];
+    $day = $_POST['dayoftheweek'];
+    $starttime = $_POST['starttime'];
+    $stoptime = $_POST['stoptime'];
+    $noofparticipants = $_POST['noofparticipants'];
+
+    $name_query = "SELECT * FROM register WHERE name='$name' ";
+    $email_query_run = mysqli_query($connection, $name_query);
+
+    if((mysqli_num_rows($name_query) > 0))
+    {
+        $_SESSION['createclassstatus'] = "Class already exists.";
+        $_SESSION['status_code'] = "error";
+        header('Location: createclass.php');  
+    }
+    else
+    {
+        if($starttime <= $stoptime)
+        {
+            $query = "INSERT INTO classes (name,venue,day,starttime,stoptime,noofparticipants) VALUES ('$name', '$venue','$day','$starttime','$stoptime','$noofparticipants')";
+            $query_run = mysqli_query($connection, $query);
+            
+            if($query_run)
+            {
+                // echo "Saved";
+                $_SESSION['createclassstatus'] = "User Created";
+                $_SESSION['createclassstatus_status_code'] = "success";
+                header('Location: createclass.php');
+            }
+            else 
+            {
+                $_SESSION['createclassstatus'] = "Class Not Added";
+                $_SESSION['createclassstatus_status_code'] = "error";
+                header('Location: createclass.php');  
+            }
+        }
+        else 
+        {
+            $_SESSION['createclassstatus'] = "Start time should be earlier than Stop time.";
+            $_SESSION['createclassstatus_status_code'] = "warning";
+            header('Location: createclass.php');  
         }
     }
 
