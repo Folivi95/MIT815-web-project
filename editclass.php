@@ -119,6 +119,10 @@ include('includes/navbar.php');
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                            <?php
+                              $query = "SELECT * FROM classes";
+                              $query_run = mysqli_query($connection, $query);
+                            ?>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -147,50 +151,28 @@ include('includes/navbar.php');
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                      <?php
+                                        if (mysqli_num_rows($query_run) > 0) {
+                                          while ($row = mysqli_fetch_assoc($query_run)) {
+                                      ?>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
+                                            <td><?php echo $row['firstname']; ?></td>
+                                            <td><?php echo $row['firstname']; ?></td>
+                                            <td><?php echo $row['firstname']; ?></td>
+                                            <td><?php echo $row['firstname']; ?></td>
+                                            <td><?php echo $row['firstname']; ?></td>
+                                            <td><?php echo $row['firstname']; ?></td>
                                             <td>4</td>
                                             <td><button class="btn btn-warning">Update</button></td>
                                             <td><button class="btn btn-danger">Delete</button></td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>3</td>
-                                            <td><button class="btn btn-warning">Update</button></td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>2</td>
-                                            <td><button class="btn btn-warning">Update</button></td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>1</td>
-                                            <td><button class="btn btn-warning">Update</button></td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
-                                        </tr>
+                                      <?php
+                                          }
+                                        }
+                                        else {
+                                          echo "No Record Found";
+                                        }
+                                      ?>
                                     </tbody>
                                 </table>
                             </div>
