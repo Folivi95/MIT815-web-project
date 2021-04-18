@@ -102,8 +102,8 @@ include('includes/navbar.php');
 
   <!-- Content Row -->
   <?php 
-    if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-      $message = $_SESSION['status'];
+    if (isset($_SESSION['createuserstatus']) && $_SESSION['createuserstatus'] != '') {
+      $message = $_SESSION['createuserstatus'];
       echo "<script type='text/javascript'>toastr.error({$message})</script>";
     }
   ?>

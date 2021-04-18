@@ -65,7 +65,7 @@ if(isset($_POST['createuserbtn']))
     $email_query_run2 = mysqli_query($connection, $email_query2);
     if((mysqli_num_rows($email_query_run) > 0) && (mysqli_num_rows($email_query_run2) > 0))
     {
-        $_SESSION['status'] = "User already exists.";
+        $_SESSION['createuserstatus'] = "User already exists.";
         $_SESSION['status_code'] = "error";
         header('Location: createuser.php');  
     }
@@ -73,7 +73,7 @@ if(isset($_POST['createuserbtn']))
     {
         if($password === $cpassword)
         {
-            $query = "INSERT INTO register (username,email,password) VALUES ('$username','$email','$password')";
+            $query = "INSERT INTO register (firstname,lastname,email,password) VALUES ('$firstname', '$lastname','$email','$password')";
             $query_run = mysqli_query($connection, $query);
             
             if($query_run)
