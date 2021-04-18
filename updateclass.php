@@ -1,4 +1,5 @@
 <?php
+include('includes/security.php');
 include('includes/header.php'); 
 include('includes/navbar.php'); 
 ?>
@@ -102,26 +103,37 @@ include('includes/navbar.php');
 
   <!-- Content Row -->
   <?php 
-    if (isset($_SESSION['createclassstatus']) && $_SESSION['createclassstatus'] != '') {
-      $message = $_SESSION['createclassstatus'];
+    if (isset($_SESSION['update_class_status']) && $_SESSION['update_class_status'] != '') {
+      $message = $_SESSION['update_class_status'];
       echo "<script type='text/javascript'>toastr.success({$message})</script>";
     }
   ?>
 
   <div class="container-fluid">
+  <?php 
+    if (isset($_SESSION['update_btn'])) {
+        $id = $_POST['update_id'];
+                
+        $query = "SELECT * FROM classes WHERE id='$id' ";
+        $query_run = mysqli_query($connection, $query);
+        foreach($query_run as $row)
+        {
+  ?>
     <form action="code.php" method="POST">
+        <input type="hidden" name="update_id" value="<?php echo $row['id'] ?>">
         <div class="modal-body">
             <div class="form-group">
                 <label>Class Name</label>
-                <input type="text" name="classname" class="form-control col-md-5" placeholder="Enter Class Name">
+                <input type="text" name="classname" value="<?php echo $row['name'] ?>"  class="form-control col-md-5" placeholder="Enter Class Name">
             </div>
             <div class="form-group">
                 <label>Venue</label>
-                <input type="text" name="venue" class="form-control col-md-5" placeholder="Enter Venue">
+                <input type="text" name="venue" value="<?php echo $row['venue'] ?>"  class="form-control col-md-5" placeholder="Enter Venue">
             </div>
             <div class="form-group">
                 <label>Period (Day of the week)</label>
                 <select name="day" id="day">
+                  <option value="<?php echo $row['day'] ?>" selected="selected"><?php echo $row['day'] ?></option>
                   <option value="Monday">Monday</option>
                   <option value="Tuesday">Tuesday</option>
                   <option value="Wednesday">Wednesday</option>
@@ -133,20 +145,24 @@ include('includes/navbar.php');
             </div>
             <div class="form-group">
                 <label>Start Time</label>
-                <input type="time" name="starttime" class="form-control col-md-5" placeholder="Enter Start Time">
+                <input type="time" name="starttime" value="<?php echo $row['starttime'] ?>"  class="form-control col-md-5" placeholder="Enter Start Time">
             </div>
             <div class="form-group">
                 <label>Stop Time</label>
-                <input type="time" name="stoptime" class="form-control col-md-5" placeholder="Enter Stop Time">
+                <input type="time" name="stoptime" value="<?php echo $row['stoptime'] ?>"  class="form-control col-md-5" placeholder="Enter Stop Time">
             </div>
             <div class="form-group">
                 <label>Max. No of Participants</label>
-                <input type="number" name="noofparticipants" class="form-control col-md-5" placeholder="Enter Period">
+                <input type="number" name="noofparticipants" value="<?php echo $row['noofparticipants'] ?>"  class="form-control col-md-5" placeholder="Enter Period">
             </div>
 
-            <button type="submit" name="createclassbtn" class="btn btn-primary">Create</button>
+            <button type="submit" name="update_class" class="btn btn-primary">Update</button>
         </div>
     </form>
+    <?php
+        }
+    }
+    ?>
   </div>
 
 

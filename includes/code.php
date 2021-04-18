@@ -1,3 +1,4 @@
+<!-- delete user -->
 <?php
 include('security.php');
 
@@ -22,6 +23,7 @@ if(isset($_POST['delete_user']))
 }
 ?>
 
+<!-- create user -->
 <?php
 include('security.php');
 
@@ -76,6 +78,7 @@ if(isset($_POST['createuserbtn']))
 }
 ?>
 
+<!-- create class -->
 <?php
 include('security.php');
 
@@ -126,6 +129,38 @@ if(isset($_POST['createclassbtn']))
         }
     }
 
+}
+?>
+
+<!-- update class -->
+<?php
+include('security.php');
+
+if(isset($_POST['update_class']))
+{
+    $id = $_POST['update_id'];
+    $classname = $_POST['classname'];
+    $venue = $_POST['venue'];
+    $day = $_POST['day'];
+    $starttime = $_POST['starttime'];
+    $stoptime = $_POST['stoptime'];
+    $noofparticipants = $_POST['noofparticipants'];
+
+    $query = "UPDATE classes SET name='$classname', venue='$venue', day='$day', starttime='$starttime', stoptime='$stoptime', noofparticipants='$noofparticipants' WHERE id='$id' ";
+    $query_run = mysqli_query($connection, $query);
+
+    if($query_run)
+    {
+        $_SESSION['update_class_status'] = "Class updated successfully";
+        $_SESSION['update_class_status_code'] = "success";
+        header('Location: updateclass.php'); 
+    }
+    else
+    {
+        $_SESSION['update_class_status'] = "Failed to update class";
+        $_SESSION['update_class_status_code'] = "error";
+        header('Location: updateclass.php'); 
+    }
 }
 ?>
 

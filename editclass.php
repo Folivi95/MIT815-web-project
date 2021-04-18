@@ -102,6 +102,13 @@ include('includes/navbar.php');
   </div>
 
   <!-- Content Row -->
+  <?php 
+    if (isset($_SESSION['delete_class_status']) && $_SESSION['delete_class_status'] != '') {
+      $message = $_SESSION['delete_class_status'];
+      echo "<script type='text/javascript'>toastr.success({$message})</script>";
+    }
+  ?>
+
   <div class="container-fluid">
    <!-- Page Heading -->
    <h1 class="h3 mb-2 text-gray-800">Edit Class Details</h1>
