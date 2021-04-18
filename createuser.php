@@ -107,15 +107,15 @@ include('includes/navbar.php');
         <div class="modal-body">
             <div class="form-group">
                 <label>First Name</label>
-                <input type="text" name="username" class="form-control col-md-5" placeholder="Enter First Name">
+                <input type="text" name="firstname" class="form-control col-md-5" placeholder="Enter First Name">
             </div>
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" name="username" class="form-control col-md-5" placeholder="Enter Last Name">
+                <input type="text" name="lastname" class="form-control col-md-5" placeholder="Enter Last Name">
             </div>
             <div class="form-group">
                 <label>User Type</label>
-                <input type="text" name="username" class="form-control col-md-5" placeholder="Select User Type">
+                <input type="text" name="usertype" class="form-control col-md-5" placeholder="Select User Type">
             </div>
             <!-- <div class="form-group">
                 <label>Email</label>

@@ -51,6 +51,59 @@ if(isset($_POST['registerbtn']))
 <?php
 include('security.php');
 
+if(isset($_POST['createuserbtn']))
+{
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $usertype = $_POST['usertype'];
+    $password = $_POST['password'];
+    $cpassword = $_POST['confirmpassword'];
+
+    $email_query = "SELECT * FROM register WHERE firstname='$firstname' ";
+    $email_query2 = "SELECT * FROM register WHERE lastname='$lastname' ";
+    $email_query_run = mysqli_query($connection, $email_query);
+    $email_query_run2 = mysqli_query($connection, $email_query2);
+    if((mysqli_num_rows($email_query_run) > 0) && (mysqli_num_rows($email_query_run2) > 0))
+    {
+        $_SESSION['status'] = "User already exists.";
+        $_SESSION['status_code'] = "error";
+        header('Location: createuser.php');  
+    }
+    else
+    {
+        if($password === $cpassword)
+        {
+            $query = "INSERT INTO register (username,email,password) VALUES ('$username','$email','$password')";
+            $query_run = mysqli_query($connection, $query);
+            
+            if($query_run)
+            {
+                // echo "Saved";
+                $_SESSION['status'] = "Admin Profile Added";
+                $_SESSION['status_code'] = "success";
+                header('Location: register.php');
+            }
+            else 
+            {
+                $_SESSION['status'] = "Admin Profile Not Added";
+                $_SESSION['status_code'] = "error";
+                header('Location: register.php');  
+            }
+        }
+        else 
+        {
+            $_SESSION['status'] = "Password and Confirm Password Does Not Match";
+            $_SESSION['status_code'] = "warning";
+            header('Location: register.php');  
+        }
+    }
+
+}
+?>
+
+<?php
+include('security.php');
+
 if(isset($_POST['updatebtn']))
 {
     $id = $_POST['edit_id'];
