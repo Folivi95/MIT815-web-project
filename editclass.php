@@ -141,7 +141,6 @@ include('includes/navbar.php');
                                         <tr>
                                             <th>Class Name</th>
                                             <th>Venue</th>
-                                            <th>Delete</th>
                                             <th>Period (Day of the week)</th>
                                             <th>Start Time</th>
                                             <th>Stop Time</th>
@@ -156,15 +155,25 @@ include('includes/navbar.php');
                                           while ($row = mysqli_fetch_assoc($query_run)) {
                                       ?>
                                         <tr>
-                                            <td><?php echo $row['firstname']; ?></td>
-                                            <td><?php echo $row['firstname']; ?></td>
-                                            <td><?php echo $row['firstname']; ?></td>
-                                            <td><?php echo $row['firstname']; ?></td>
-                                            <td><?php echo $row['firstname']; ?></td>
-                                            <td><?php echo $row['firstname']; ?></td>
+                                            <td><?php echo $row['name']; ?></td>
+                                            <td><?php echo $row['venue']; ?></td>
+                                            <td><?php echo $row['day']; ?></td>
+                                            <td><?php echo $row['starttime']; ?></td>
+                                            <td><?php echo $row['stoptime']; ?></td>
+                                            <td><?php echo $row['noofparticipants']; ?></td>
                                             <td>4</td>
-                                            <td><button class="btn btn-warning">Update</button></td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
+                                            <td>
+                                              <form action="code.php" method="post">
+                                                <input type="hidden" name="update_id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" name="update_class" class="btn btn-warning">Update</button>
+                                              </form>
+                                            </td>
+                                            <td>
+                                              <form action="code.php" method="post">
+                                                <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" name="delete_class" class="btn btn-danger">Delete</button>
+                                              </form>
+                                            </td>
                                         </tr>
                                       <?php
                                           }
