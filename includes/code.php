@@ -73,27 +73,28 @@ if(isset($_POST['createuserbtn']))
     {
         if($password === $cpassword)
         {
-            $query = "INSERT INTO register (firstname,lastname,email,password) VALUES ('$firstname', '$lastname','$email','$password')";
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $query = "INSERT INTO users (firstname,lastname,email,password) VALUES ('$firstname', '$lastname','$email','$hash')";
             $query_run = mysqli_query($connection, $query);
             
             if($query_run)
             {
                 // echo "Saved";
-                $_SESSION['status'] = "Admin Profile Added";
-                $_SESSION['status_code'] = "success";
+                $_SESSION['createuserstatus'] = "User Created";
+                $_SESSION['createuserstatus_status_code'] = "success";
                 header('Location: register.php');
             }
             else 
             {
-                $_SESSION['status'] = "Admin Profile Not Added";
-                $_SESSION['status_code'] = "error";
+                $_SESSION['createuserstatus'] = "Admin Profile Not Added";
+                $_SESSION['createuserstatus_status_code'] = "error";
                 header('Location: register.php');  
             }
         }
         else 
         {
-            $_SESSION['status'] = "Password and Confirm Password Does Not Match";
-            $_SESSION['status_code'] = "warning";
+            $_SESSION['createuserstatus'] = "Password and Confirm Password Does Not Match";
+            $_SESSION['createuserstatus_status_code'] = "warning";
             header('Location: register.php');  
         }
     }
