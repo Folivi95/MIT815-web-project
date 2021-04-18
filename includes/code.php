@@ -164,6 +164,32 @@ if(isset($_POST['update_class']))
 }
 ?>
 
+<!-- delete class -->
+<?php
+include('security.php');
+
+if(isset($_POST['delete_class']))
+{
+    $id = $_POST['delete_id'];
+
+    $query = "DELETE from classes WHERE id='$id' ";
+    $query_run = mysqli_query($connection, $query);
+
+    if($query_run)
+    {
+        $_SESSION['delete_class_status'] = "Class deleted successfully";
+        $_SESSION['delete_class_status_code'] = "success";
+        header('Location: updateclass.php'); 
+    }
+    else
+    {
+        $_SESSION['delete_class_status'] = "Failed to delete class";
+        $_SESSION['delete_class_status_code'] = "error";
+        header('Location: updateclass.php'); 
+    }
+}
+?>
+
 <?php
 include('security.php');
 
