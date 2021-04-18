@@ -101,6 +101,12 @@ include('includes/navbar.php');
   </div>
 
   <!-- Content Row -->
+  <?php 
+    if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
+      $message = $_SESSION['status'];
+      echo "<script type='text/javascript'>toastr.error({$message})</script>";
+    }
+  ?>
 
   <div class="container-fluid">
     <form action="code.php" method="POST">
