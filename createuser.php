@@ -104,7 +104,7 @@ include('includes/navbar.php');
   <?php 
     if (isset($_SESSION['createuserstatus']) && $_SESSION['createuserstatus'] != '') {
       $message = $_SESSION['createuserstatus'];
-      echo "<script type='text/javascript'>toastr.error({$message})</script>";
+      echo "<script type='text/javascript'>toastr.success({$message})</script>";
     }
   ?>
 
@@ -121,7 +121,10 @@ include('includes/navbar.php');
             </div>
             <div class="form-group">
                 <label>User Type</label>
-                <input type="text" name="usertype" class="form-control col-md-5" placeholder="Select User Type">
+                <select name="usertype" id="usertype">
+                  <option value="user">Normal User</option>
+                  <option value="admin">System Administrator</option>
+                </select>
             </div>
             <!-- <div class="form-group">
                 <label>Email</label>

@@ -127,6 +127,10 @@ include('includes/navbar.php');
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                    <?php
+                                      if (mysqli_num_rows($query_run) > 0) {
+                                        while ($row = mysqli_fetch_assoc($query_run)) {
+                                    ?>
                                         <tr>
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>
@@ -147,6 +151,14 @@ include('includes/navbar.php');
                                             <td>Senior Javascript Developer</td>
                                             <td><button class="btn btn-danger">Delete</button></td>
                                         </tr>
+                                      <?php
+                                          }
+                                        }
+                                        else {
+                                          echo "No Record Found";
+                                        }
+                                      ?>
+                                      ?>
                                     </tbody>
                                 </table>
                             </div>

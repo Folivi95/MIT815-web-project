@@ -74,7 +74,7 @@ if(isset($_POST['createuserbtn']))
         if($password === $cpassword)
         {
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            $query = "INSERT INTO users (firstname,lastname,email,password) VALUES ('$firstname', '$lastname','$email','$hash')";
+            $query = "INSERT INTO users (firstname,lastname,usertype,password) VALUES ('$firstname', '$lastname','$usertype','$hash')";
             $query_run = mysqli_query($connection, $query);
             
             if($query_run)
