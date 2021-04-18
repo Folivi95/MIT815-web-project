@@ -1,4 +1,5 @@
 <?php
+include('includes/security.php');
 include('includes/header.php'); 
 include('includes/navbar.php'); 
 ?>
@@ -101,6 +102,12 @@ include('includes/navbar.php');
   </div>
 
   <!-- Content Row -->
+    <?php 
+      if (isset($_SESSION['delete_user_status']) && $_SESSION['delete_user_status'] != '') {
+        $message = $_SESSION['delete_user_status'];
+        echo "<script type='text/javascript'>toastr.success({$message})</script>";
+      }
+    ?>
   <div class="container-fluid">
    <!-- Page Heading -->
    <h1 class="h3 mb-2 text-gray-800">Edit Users</h1>
@@ -111,17 +118,23 @@ include('includes/navbar.php');
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                            <?php
+                              $query = "SELECT * FROM users";
+                              $query_run = mysqli_query($connection, $query);
+                            ?>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
                                             <th>User Type</th>
                                             <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
                                             <th>User Type</th>
                                             <th>Delete</th>
                                         </tr>
@@ -132,24 +145,15 @@ include('includes/navbar.php');
                                         while ($row = mysqli_fetch_assoc($query_run)) {
                                     ?>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td><button class="btn btn-danger">Delete</button></td>
+                                          <td><?php echo $row['firstname']; ?></td>
+                                          <td><?php echo $row['lastname']; ?></td>
+                                          <td><?php echo $row['usertype']; ?></td>
+                                          <td>
+                                            <form action="code.php" method="post">
+                                              <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
+                                              <button type="submit" name="delete_user" class="btn btn-danger">Delete</button>
+                                            </form>
+                                          </td>
                                         </tr>
                                       <?php
                                           }
@@ -157,7 +161,6 @@ include('includes/navbar.php');
                                         else {
                                           echo "No Record Found";
                                         }
-                                      ?>
                                       ?>
                                     </tbody>
                                 </table>

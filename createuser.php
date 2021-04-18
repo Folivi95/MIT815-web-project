@@ -122,8 +122,8 @@ include('includes/navbar.php');
             <div class="form-group">
                 <label>User Type</label>
                 <select name="usertype" id="usertype">
-                  <option value="user">Normal User</option>
-                  <option value="admin">System Administrator</option>
+                  <option value="User">Normal User</option>
+                  <option value="Administrator">System Administrator</option>
                 </select>
             </div>
             <!-- <div class="form-group">
