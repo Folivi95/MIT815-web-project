@@ -1,8 +1,15 @@
 <?php
+include('includes/security.php');
 include('includes/header.php'); 
 include('includes/navbar.php'); 
 ?>
 
+<!-- redirect to login page if user is not logged in -->
+<?php 
+    if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] === '') {
+      header('Location: login.php');
+    }
+?>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
