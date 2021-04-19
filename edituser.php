@@ -1,5 +1,19 @@
 <?php
 include('includes/security.php');
+?>
+
+<!-- redirect to login page if user is not logged in -->
+<?php 
+    if (!isset($_SESSION['user_id'])) {
+      header('Location: login.php');
+    }
+
+    if (isset($_SESSION['usertype']) && ($_SESSION['usertype'] == "User")) {
+      header('Location: viewclass.php');
+    }
+?>
+
+<?php
 include('includes/header.php'); 
 include('includes/navbar.php'); 
 ?>

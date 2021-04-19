@@ -259,7 +259,7 @@ if(isset($_POST['enroll_class']))
     {
         $_SESSION['view_class_status'] = "Enrolled for class successfully";
         $_SESSION['view_class_status_code'] = "success";
-        header('Location: updateclass.php'); 
+        header('Location: viewclass.php'); 
     }
     else
     {
