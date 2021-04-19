@@ -214,6 +214,7 @@ if(isset($_POST['login_btn']))
         {
             $_SESSION['firstname'] = $firstname;
             $_SESSION['lastname'] = $lastname;
+            $_SESSION['user_id'] = $usertypes['id'];
             $_SESSION['usertype'] = $usertypes['usertype'];
             header('Location: index.php');
         }
@@ -221,6 +222,7 @@ if(isset($_POST['login_btn']))
         {
             $_SESSION['firstname'] = $firstname;
             $_SESSION['lastname'] = $lastname;
+            $_SESSION['user_id'] = $usertypes['id'];
             $_SESSION['usertype'] = $usertypes['usertype'];
             header('Location: index.php');
         }
