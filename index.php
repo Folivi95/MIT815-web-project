@@ -1,15 +1,20 @@
 <?php
 include('includes/security.php');
-include('includes/header.php'); 
-include('includes/navbar.php'); 
 ?>
 
 <!-- redirect to login page if user is not logged in -->
 <?php 
-    if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] === '') {
+    if (!isset($_SESSION['user_id'])) {
       header('Location: login.php');
     }
 ?>
+
+<?php
+include('includes/header.php'); 
+include('includes/navbar.php'); 
+?>
+
+
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -108,6 +113,7 @@ include('includes/navbar.php');
   </div>
 
   <!-- Content Row -->
+
 
 
 <div class="col-xl-3 col-md-6 mb-4">
