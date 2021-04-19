@@ -52,13 +52,13 @@
                                     </div>
                                     <form class="user" action="code.php" method="POST">
                                         <div class="form-group">
-                                          <input type="text" name="firstname" class="form-control col-md-5" placeholder="Enter First Name">
+                                          <input type="text" name="firstname" class="form-control form-control-user" placeholder="Enter First Name">
                                         </div>
                                         <div class="form-group">
-                                          <input type="text" name="lastname" class="form-control col-md-5" placeholder="Enter Last Name">
+                                          <input type="text" name="lastname" class="form-control form-control-user" placeholder="Enter Last Name">
                                         </div>
                                         <div class="form-group">
-                                          <select name="usertype" id="usertype">
+                                          <select class="form-control-user" name="usertype" id="usertype">
                                             <option value="User" selected="selected">Normal User</option>
                                             <option value="Administrator">System Administrator</option>
                                           </select>

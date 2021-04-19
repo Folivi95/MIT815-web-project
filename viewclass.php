@@ -1,4 +1,19 @@
 <?php
+include('includes/security.php');
+?>
+
+<!-- redirect to login page if user is not logged in -->
+<?php 
+    if (!isset($_SESSION['user_id'])) {
+      header('Location: login.php');
+    }
+
+    if (isset($_SESSION['usertype']) && ($_SESSION['usertype'] == "Administrator")) {
+      header('Location: createclass.php');
+    }
+?>
+
+<?php
 include('includes/header.php'); 
 include('includes/navbar.php'); 
 ?>
@@ -9,7 +24,7 @@ include('includes/navbar.php');
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <h1 class="h3 mb-0 text-gray-800">Normal User</h1>
     <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
         class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
   </div>
@@ -101,6 +116,12 @@ include('includes/navbar.php');
   </div>
 
   <!-- Content Row -->
+  <?php 
+    if (isset($_SESSION['view_class_status']) && $_SESSION['view_class_status'] != '') {
+      $message = $_SESSION['view_class_status'];
+      echo "<script type='text/javascript'>toastr.success({$message})</script>";
+    }
+  ?>
   <div class="container-fluid">
    <!-- Page Heading -->
    <h1 class="h3 mb-2 text-gray-800">All Available Classes</h1>
@@ -111,16 +132,18 @@ include('includes/navbar.php');
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                            <?php
+                              $query = "SELECT * FROM classes";
+                              $query_run = mysqli_query($connection, $query);
+                            ?>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Class Name</th>
                                             <th>Venue</th>
-                                            <th>Delete</th>
                                             <th>Period (Day of the week)</th>
                                             <th>Start Time</th>
                                             <th>Stop Time</th>
-                                            <th>Spaces Left</th>
                                             <th>Enroll</th>
                                         </tr>
                                     </thead>
@@ -128,55 +151,37 @@ include('includes/navbar.php');
                                         <tr>
                                             <th>Class Name</th>
                                             <th>Venue</th>
-                                            <th>Delete</th>
                                             <th>Period (Day of the week)</th>
                                             <th>Start Time</th>
                                             <th>Stop Time</th>
-                                            <th>Spaces Left</th>
                                             <th>Enroll</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                      <?php
+                                        if (mysqli_num_rows($query_run) > 0) {
+                                          while ($row = mysqli_fetch_assoc($query_run)) {
+                                      ?>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>4</td>
-                                            <td><button class="btn btn-success">Enroll</button></td>
+                                            <td><?php echo $row['name']; ?></td>
+                                            <td><?php echo $row['venue']; ?></td>
+                                            <td><?php echo $row['day']; ?></td>
+                                            <td><?php echo $row['starttime']; ?></td>
+                                            <td><?php echo $row['stoptime']; ?></td>
+                                            <td>
+                                              <form action="code.php" method="post">
+                                                <input type="hidden" name="class_id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" name="enroll_class" class="btn btn-success">Enroll</button>
+                                              </form>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>3</td>
-                                            <td><button class="btn btn-success">Enroll</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>2</td>
-                                            <td><button class="btn btn-success">Enroll</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>1</td>
-                                            <td><button class="btn btn-success">Enroll</button></td>
-                                        </tr>
+                                      <?php
+                                          }
+                                        }
+                                        else {
+                                          echo "No Record Found";
+                                        }
+                                      ?>
                                     </tbody>
                                 </table>
                             </div>

@@ -9,7 +9,10 @@ session_start();
 if(isset($_POST['logout_btn']))
 {
     session_destroy();
-    unset($_SESSION['username']);
+    unset($_SESSION['firstname']);
+    unset($_SESSION['lastname']);
+    unset($_SESSION['user_id']);
+    unset($_SESSION['usertype']);
     header('Location: login.php');
 }
 

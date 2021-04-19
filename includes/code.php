@@ -208,7 +208,9 @@ if(isset($_POST['login_btn']))
     // check if password matches
     $password_hash = $usertypes['password'];
     $verify_password = password_verify($password_login, $password_hash);
-    if ($verify_password) {
+    $verify = $password_login == $usertypes['password'];
+
+    if ($verify_password || $verify) {
         # code...
         if($usertypes['usertype'] == "Administrator")
         {
@@ -238,6 +240,33 @@ if(isset($_POST['login_btn']))
         header('Location: login.php');
     }
     
+}
+?>
+
+<!-- enroll class -->
+<?php
+include('security.php');
+
+if(isset($_POST['enroll_class']))
+{
+    $class_id = $_POST['class_id'];
+    $user_id = $_SESSION['user_id'];
+
+    $enroll_query = "INSERT INTO usersclass (classesid,usersid) VALUES ('$class_id', '$user_id')";
+    $query_run = mysqli_query($connection, $enroll_query);
+
+    if($query_run)
+    {
+        $_SESSION['view_class_status'] = "Enrolled for class successfully";
+        $_SESSION['view_class_status_code'] = "success";
+        header('Location: updateclass.php'); 
+    }
+    else
+    {
+        $_SESSION['view_class_status'] = "Failed to enroll for class";
+        $_SESSION['view_class_status_code'] = "error";
+        header('Location: viewclass.php'); 
+    }
 }
 ?>
 
