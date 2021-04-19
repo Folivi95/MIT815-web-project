@@ -20,10 +20,19 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- for toastr notifications -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </head>
 
 <body class="bg-gradient-primary">
-
+  <?php 
+    if (isset($_SESSION['login_status']) && $_SESSION['login_status'] != '') {
+      $message = $_SESSION['login_status'];
+      echo "<script type='text/javascript'>toastr.success({$message})</script>";
+    }
+  ?>
     <div class="container">
 
         <!-- Outer Row -->
@@ -41,26 +50,26 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="code.php" method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                          <input type="text" name="firstname" class="form-control col-md-5" placeholder="Enter First Name">
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="text" name="lastname" class="form-control col-md-5" placeholder="Enter Last Name">
+                                        </div>
+                                        <div class="form-group">
+                                          <select name="usertype" id="usertype">
+                                            <option value="User" selected="selected">Normal User</option>
+                                            <option value="Administrator">System Administrator</option>
+                                          </select>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="password" name="password" placeholder="Password">
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
+                                        </button>
                                         <!-- <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google

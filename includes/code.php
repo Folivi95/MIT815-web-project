@@ -190,6 +190,55 @@ if(isset($_POST['delete_class']))
 }
 ?>
 
+<!-- Login method -->
+<?php
+include('security.php');
+
+if(isset($_POST['login_btn']))
+{
+    $firstname = $_POST['firstname']; 
+    $lastname = $_POST['lastname']; 
+    $usertype = $_POST['usertype']; 
+    $password_login = $_POST['passwordd']; 
+
+    $query = "SELECT * FROM users WHERE firstname='$firstname' AND lastname='$lastname' LIMIT 1";
+    $query_run = mysqli_query($connection, $query);
+    $usertypes = mysqli_fetch_array($query_run);
+
+    // check if password matches
+    $password_hash = $usertypes['password'];
+    $verify_password = password_verify($password_login, $password_hash);
+    if ($verify_password) {
+        # code...
+        if($usertypes['usertype'] == "Administrator")
+        {
+            $_SESSION['firstname'] = $firstname;
+            $_SESSION['lastname'] = $lastname;
+            $_SESSION['usertype'] = $usertypes['usertype'];
+            header('Location: index.php');
+        }
+        else if($usertypes['usertype'] == "User")
+        {
+            $_SESSION['firstname'] = $firstname;
+            $_SESSION['lastname'] = $lastname;
+            $_SESSION['usertype'] = $usertypes['usertype'];
+            header('Location: index.php');
+        }
+        else
+        {
+            $_SESSION['login_status'] = "Firstname / Lastname / Password is Invalid";
+            header('Location: login.php');
+        }
+    }
+    else {
+        # code...
+        $_SESSION['login_status'] = "Incorrect Password";
+        header('Location: login.php');
+    }
+    
+}
+?>
+
 <?php
 include('security.php');
 
