@@ -50,7 +50,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" action="code.php" method="POST">
+                                    <form class="user" action="includes/code.php" method="POST">
                                         <div class="form-group">
                                           <input type="text" name="firstname" class="form-control form-control-user" placeholder="Enter First Name">
                                         </div>
