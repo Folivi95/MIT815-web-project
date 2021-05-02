@@ -1,6 +1,11 @@
-<!-- delete user -->
+
 <?php
 include('security.php');
+
+?>
+
+<!-- delete user -->
+<?php
 
 if(isset($_POST['delete_user']))
 {
@@ -25,7 +30,6 @@ if(isset($_POST['delete_user']))
 
 <!-- create user -->
 <?php
-include('security.php');
 
 if(isset($_POST['createuserbtn']))
 {
@@ -80,7 +84,6 @@ if(isset($_POST['createuserbtn']))
 
 <!-- create class -->
 <?php
-include('security.php');
 
 if(isset($_POST['createclassbtn']))
 {
@@ -134,7 +137,6 @@ if(isset($_POST['createclassbtn']))
 
 <!-- update class -->
 <?php
-include('security.php');
 
 if(isset($_POST['update_class']))
 {
@@ -166,7 +168,6 @@ if(isset($_POST['update_class']))
 
 <!-- delete class -->
 <?php
-include('security.php');
 
 if(isset($_POST['delete_class']))
 {
@@ -192,14 +193,14 @@ if(isset($_POST['delete_class']))
 
 <!-- Login method -->
 <?php
-include('security.php');
 
 if(isset($_POST['login_btn']))
 {
+    echo('I came here');
     $firstname = $_POST['firstname']; 
     $lastname = $_POST['lastname']; 
     $usertype = $_POST['usertype']; 
-    $password_login = $_POST['passwordd']; 
+    $password_login = $_POST['password']; 
 
     $query = "SELECT * FROM users WHERE firstname='$firstname' AND lastname='$lastname' LIMIT 1";
     $query_run = mysqli_query($connection, $query);
@@ -208,7 +209,7 @@ if(isset($_POST['login_btn']))
     // check if password matches
     $password_hash = $usertypes['password'];
     $verify_password = password_verify($password_login, $password_hash);
-    $verify = $password_login == $usertypes['password'];
+    $verify = $password_login === $usertypes['password'];
 
     if ($verify_password || $verify) {
         # code...
@@ -218,7 +219,7 @@ if(isset($_POST['login_btn']))
             $_SESSION['lastname'] = $lastname;
             $_SESSION['user_id'] = $usertypes['id'];
             $_SESSION['usertype'] = $usertypes['usertype'];
-            header('Location: index.php');
+            header('Location: /admin/index.php');
         }
         else if($usertypes['usertype'] == "User")
         {
@@ -226,18 +227,18 @@ if(isset($_POST['login_btn']))
             $_SESSION['lastname'] = $lastname;
             $_SESSION['user_id'] = $usertypes['id'];
             $_SESSION['usertype'] = $usertypes['usertype'];
-            header('Location: index.php');
+            header('Location: /admin/index.php');
         }
         else
         {
             $_SESSION['login_status'] = "Firstname / Lastname / Password is Invalid";
-            header('Location: login.php');
+            header('Location: /admin/login.php');
         }
     }
     else {
         # code...
         $_SESSION['login_status'] = "Incorrect Password";
-        header('Location: login.php');
+        header('Location: /admin/login.php');
     }
     
 }
@@ -245,7 +246,6 @@ if(isset($_POST['login_btn']))
 
 <!-- enroll class -->
 <?php
-include('security.php');
 
 if(isset($_POST['enroll_class']))
 {
@@ -271,7 +271,6 @@ if(isset($_POST['enroll_class']))
 ?>
 
 <?php
-include('security.php');
 
 if(isset($_POST['updatebtn']))
 {
@@ -300,7 +299,6 @@ if(isset($_POST['updatebtn']))
 ?>
 
 <?php
-include('security.php');
 
 if(isset($_POST['delete_btn']))
 {
@@ -321,86 +319,5 @@ if(isset($_POST['delete_btn']))
         $_SESSION['status_code'] = "error";
         header('Location: register.php'); 
     }    
-}
-?>
-
-<?php
-include('security.php');
-
-if(isset($_POST['login_btn']))
-{
-    $email_login = $_POST['emaill']; 
-    $password_login = $_POST['passwordd']; 
-
-    $query = "SELECT * FROM register WHERE email='$email_login' AND password='$password_login' LIMIT 1";
-    $query_run = mysqli_query($connection, $query);
-    $usertypes = mysqli_fetch_array($query_run);
-
-    if($usertypes['usertype'] == "admin")
-    {
-        $_SESSION['username'] = $email_login;
-        header('Location: index.php');
-    }
-    else if($usertypes['usertype'] == "user")
-    {
-        $_SESSION['cusername'] = $email_login;
-        header('Location: ../index.php');
-    }
-    else
-    {
-        $_SESSION['status'] = "Email / Password is Invalid";
-        header('Location: login.php');
-    }
-}
-?>
-
-<?php
-include('security.php');
-
-if(isset($_POST['registerbtn']))
-{
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $cpassword = $_POST['confirmpassword'];
-    $usertype = $_POST['usertype'];
-    
-    $email_query = "SELECT * FROM register WHERE email='$email' ";
-    $email_query_run = mysqli_query($connection, $email_query);
-    if(mysqli_num_rows($email_query_run) > 0)
-    {
-        $_SESSION['status'] = "Email Already Taken. Please Try Another one.";
-        $_SESSION['status_code'] = "error";
-        header('Location: register.php');  
-    }
-    else
-    {
-        if($password === $cpassword)
-        {
-            $query = "INSERT INTO register (username,email,password,usertype) VALUES ('$username','$email','$password','$usertype')";
-            $query_run = mysqli_query($connection, $query);
-            
-            if($query_run)
-            {
-                // echo "Saved";
-                $_SESSION['status'] = "Admin Profile Added";
-                $_SESSION['status_code'] = "success";
-                header('Location: register.php');
-            }
-            else 
-            {
-                $_SESSION['status'] = "Admin Profile Not Added";
-                $_SESSION['status_code'] = "error";
-                header('Location: register.php');  
-            }
-        }
-        else 
-        {
-            $_SESSION['status'] = "Password and Confirm Password Does Not Match";
-            $_SESSION['status_code'] = "warning";
-            header('Location: register.php');  
-        }
-    }
-
 }
 ?>
