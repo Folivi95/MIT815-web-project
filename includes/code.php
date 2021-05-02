@@ -11,7 +11,7 @@ if(isset($_POST['delete_user']))
 {
     $id = $_POST['id'];
 
-    $id_query = "DELETE * FROM users WHERE id='$id' ";
+    $id_query = "DELETE * FROM users WHERE id='$id'";
     $query_run = mysqli_query($connection, $id_query);
     if($query_run)
     {
@@ -39,15 +39,15 @@ if(isset($_POST['createuserbtn']))
     $password = $_POST['password'];
     $cpassword = $_POST['confirmpassword'];
 
-    $email_query = "SELECT * FROM register WHERE firstname='$firstname' ";
-    $email_query2 = "SELECT * FROM register WHERE lastname='$lastname' ";
-    $email_query_run = mysqli_query($connection, $email_query);
-    $email_query_run2 = mysqli_query($connection, $email_query2);
-    if((mysqli_num_rows($email_query_run) > 0) && (mysqli_num_rows($email_query_run2) > 0))
+    $user_query = "SELECT * FROM users WHERE firstname='$firstname' ";
+    $user_query2 = "SELECT * FROM users WHERE lastname='$lastname' ";
+    $user_query_run = mysqli_query($connection, $user_query);
+    $user_query_run2 = mysqli_query($connection, $user_query2);
+    if((mysqli_num_rows($user_query_run) > 0) && (mysqli_num_rows($user_query_run2) > 0))
     {
         $_SESSION['createuserstatus'] = "User already exists.";
         $_SESSION['status_code'] = "error";
-        header('Location: createuser.php');  
+        header('Location: /admin/createuser.php');  
     }
     else
     {
@@ -62,20 +62,20 @@ if(isset($_POST['createuserbtn']))
                 // echo "Saved";
                 $_SESSION['createuserstatus'] = "User Created";
                 $_SESSION['createuserstatus_status_code'] = "success";
-                header('Location: createuser.php');
+                header('Location: /admin/createuser.php');
             }
             else 
             {
                 $_SESSION['createuserstatus'] = "Admin Profile Not Added";
                 $_SESSION['createuserstatus_status_code'] = "error";
-                header('Location: createuser.php');  
+                header('Location: /admin/createuser.php');  
             }
         }
         else 
         {
             $_SESSION['createuserstatus'] = "Password and Confirm Password Does Not Match";
             $_SESSION['createuserstatus_status_code'] = "warning";
-            header('Location: createuser.php');  
+            header('Location: /admin/createuser.php');  
         }
     }
 
@@ -94,14 +94,14 @@ if(isset($_POST['createclassbtn']))
     $stoptime = $_POST['stoptime'];
     $noofparticipants = $_POST['noofparticipants'];
 
-    $name_query = "SELECT * FROM register WHERE name='$name' ";
+    $name_query = "SELECT * FROM classes WHERE name='$name' ";
     $email_query_run = mysqli_query($connection, $name_query);
 
     if((mysqli_num_rows($name_query) > 0))
     {
         $_SESSION['createclassstatus'] = "Class already exists.";
         $_SESSION['status_code'] = "error";
-        header('Location: createclass.php');  
+        header('Location: /admin/createclass.php');  
     }
     else
     {
@@ -115,20 +115,20 @@ if(isset($_POST['createclassbtn']))
                 // echo "Saved";
                 $_SESSION['createclassstatus'] = "User Created";
                 $_SESSION['createclassstatus_status_code'] = "success";
-                header('Location: createclass.php');
+                header('Location: /admin/createclass.php');
             }
             else 
             {
                 $_SESSION['createclassstatus'] = "Class Not Added";
                 $_SESSION['createclassstatus_status_code'] = "error";
-                header('Location: createclass.php');  
+                header('Location: /admin/createclass.php');  
             }
         }
         else 
         {
             $_SESSION['createclassstatus'] = "Start time should be earlier than Stop time.";
             $_SESSION['createclassstatus_status_code'] = "warning";
-            header('Location: createclass.php');  
+            header('Location: /admin/createclass.php');  
         }
     }
 
@@ -155,13 +155,13 @@ if(isset($_POST['update_class']))
     {
         $_SESSION['update_class_status'] = "Class updated successfully";
         $_SESSION['update_class_status_code'] = "success";
-        header('Location: updateclass.php'); 
+        header('Location: /admin/updateclass.php'); 
     }
     else
     {
         $_SESSION['update_class_status'] = "Failed to update class";
         $_SESSION['update_class_status_code'] = "error";
-        header('Location: updateclass.php'); 
+        header('Location: /admin/updateclass.php'); 
     }
 }
 ?>
@@ -180,13 +180,13 @@ if(isset($_POST['delete_class']))
     {
         $_SESSION['delete_class_status'] = "Class deleted successfully";
         $_SESSION['delete_class_status_code'] = "success";
-        header('Location: updateclass.php'); 
+        header('Location: /admin/updateclass.php'); 
     }
     else
     {
         $_SESSION['delete_class_status'] = "Failed to delete class";
         $_SESSION['delete_class_status_code'] = "error";
-        header('Location: updateclass.php'); 
+        header('Location: /admin/updateclass.php'); 
     }
 }
 ?>
@@ -259,65 +259,13 @@ if(isset($_POST['enroll_class']))
     {
         $_SESSION['view_class_status'] = "Enrolled for class successfully";
         $_SESSION['view_class_status_code'] = "success";
-        header('Location: viewclass.php'); 
+        header('Location: /admin/viewclass.php'); 
     }
     else
     {
         $_SESSION['view_class_status'] = "Failed to enroll for class";
         $_SESSION['view_class_status_code'] = "error";
-        header('Location: viewclass.php'); 
+        header('Location: /admin/viewclass.php'); 
     }
-}
-?>
-
-<?php
-
-if(isset($_POST['updatebtn']))
-{
-    $id = $_POST['edit_id'];
-    $username = $_POST['edit_username'];
-    $email = $_POST['edit_email'];
-    $password = $_POST['edit_password'];
-
-    $query = "UPDATE register SET username='$username', email='$email', password='$password' WHERE id='$id' ";
-    $query_run = mysqli_query($connection, $query);
-
-    if($query_run)
-    {
-        $_SESSION['status'] = "Your Data is Updated";
-        $_SESSION['status_code'] = "success";
-        header('Location: register.php'); 
-    }
-    else
-    {
-        $_SESSION['status'] = "Your Data is NOT Updated";
-        $_SESSION['status_code'] = "error";
-        header('Location: register.php'); 
-    }
-}
-
-?>
-
-<?php
-
-if(isset($_POST['delete_btn']))
-{
-    $id = $_POST['delete_id'];
-
-    $query = "DELETE FROM register WHERE id='$id' ";
-    $query_run = mysqli_query($connection, $query);
-
-    if($query_run)
-    {
-        $_SESSION['status'] = "Your Data is Deleted";
-        $_SESSION['status_code'] = "success";
-        header('Location: register.php'); 
-    }
-    else
-    {
-        $_SESSION['status'] = "Your Data is NOT DELETED";       
-        $_SESSION['status_code'] = "error";
-        header('Location: register.php'); 
-    }    
 }
 ?>
